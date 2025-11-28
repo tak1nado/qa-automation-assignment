@@ -5,20 +5,20 @@ import lombok.Data;
 
 @Data
 public class User {
-    private UserTitle userTitle;
-    private String email;
+    private String username;
     private String password;
     private UserRole userRole;
     private Cockpit userCockpit;
+    private boolean isTest = true;
 
-    public User(String email, String password, Cockpit userCockpit) {
+    public User(String username, String password, Cockpit userCockpit) {
         this.password = password;
-        this.email = email;
+        this.username = username;
         this.userCockpit = userCockpit;
     }
 
     @Override
     public String toString() {
-        return "User: " + this.email + ", Cockpit: " + this.userCockpit.getBaseUrl() + ", Role: " + this.getUserRole();
+        return "User: " + this.username + ", Cockpit: " + this.userCockpit.getBaseUrl() + ", Role: " + this.getUserRole();
     }
 }

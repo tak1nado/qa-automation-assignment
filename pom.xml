@@ -14,7 +14,6 @@
         <tags.skip>--tags ~@Skip</tags.skip>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <testng.version>7.4.0</testng.version>
         <junit.version>6.0.1</junit.version>
         <spring.version>5.3.31</spring.version>
         <logback.version>1.2.11</logback.version>
@@ -26,12 +25,6 @@
     </properties>
 
     <dependencies>
-        <!--TODO remove TestNG framework-->
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>${testng.version}</version>
-        </dependency>
         <!--JUnit framework-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -71,12 +64,6 @@
             <scope>test</scope>
         </dependency>
         <!--Allure report-->
-<!--        TODO remove TestNG-->
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-testng</artifactId>
-            <version>${allure.version}</version>
-        </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit5</artifactId>

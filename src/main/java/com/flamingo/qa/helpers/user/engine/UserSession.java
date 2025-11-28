@@ -16,7 +16,7 @@ public class UserSession extends Session {
     }
 
     public String getEmail() {
-        return user.getEmail();
+        return user.getUsername();
     }
 
     public String getPassword() {
