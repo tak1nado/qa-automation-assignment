@@ -22,8 +22,8 @@ public class UsersManager {
     private final InheritableThreadLocal<ArrayList<User>> tlUsers = new InheritableThreadLocal<>();
     private final ArrayList<User> pickedUsers = new ArrayList<>();
 
-    public User createInstance(String role, String email, String password, Cockpit userCockpit) {
-        User user = new User(email, password, userCockpit);
+    public User createInstance(String role, String username, String password, Cockpit userCockpit) {
+        User user = new User(username, password, userCockpit);
         this.users.add(user);
         user.setUserRole(parseUserRoles(userCockpit, role));
         return user;
@@ -31,10 +31,6 @@ public class UsersManager {
 
     public ArrayList<User> getUsers() {
         return users;
-    }
-
-    public User getUserByEmail(String email) {
-        return getUsers().stream().filter(user -> user.getUsername().equalsIgnoreCase(email)).findAny().orElse(null);
     }
 
     protected UserRole parseUserRoles(Cockpit userCockpit, String userRoleName) {
@@ -66,54 +62,26 @@ public class UsersManager {
                 .collect(Collectors.toList());
     }
 
+    public User getUserByRole(UserRole userRole) {
+        return this.getAllUsers().stream()
+                .filter(user -> user.getUserRole().equals(userRole)).findAny()
+                .orElseThrow(() -> new NotFoundException("No user with role: " + userRole));
+    }
+
+    //We need test user flag if we do not want to use default/hardcoded users not to corrupt any default data
     public User getTestUserByRole(UserRole userRole) {
         return this.getTestUsers().stream()
                 .filter(user -> user.getUserRole().equals(userRole)).findAny()
                 .orElseThrow(() -> new NotFoundException("No user with role: " + userRole));
     }
 
+    //Default users are hardcoded users that are created out of test execution before test starts and imported from properties
     public User getDefaultUserByRole(UserRole userRole) {
         return this.getAllUsers().stream()
                 .filter(user -> !user.isTest())
                 .filter(user -> user.getUserRole().equals(userRole)).findAny()
                 .orElseThrow(() -> new NotFoundException("No user with role: " + userRole));
     }
-
-//    public UserData generateRandomValidUserDataWithRole(UserRole userRole) {
-//        return new UserData.Builder()
-//                .age(randomUtils.getRandomNumberInRange(17, 59))
-//                .gender(Gender.getRandom())
-//                .login(randomUtils.generateRandomLogin())
-//                .password(randomUtils.generateRandomPassword())
-//                .role(userRole)
-//                .screenName(randomUtils.generateRandomScreenName())
-//                .build();
-//    }
-//
-//    public UserData generateRandomValidUserDataWithoutRole() {
-//        return new UserData.Builder()
-//                .age(randomUtils.getRandomNumberInRange(17, 59))
-//                .gender(Gender.getRandom())
-//                .login(randomUtils.generateRandomLogin())
-//                .password(randomUtils.generateRandomPassword())
-//                .screenName(randomUtils.generateRandomScreenName())
-//                .build();
-//    }
-//
-//    public void deleteAllCreatedUsers() {
-//        log.info("Users to delete: " + getTestUsers());
-//        getTestUsers().forEach(this::deleteUser);
-//        this.users.removeAll(getTestUsers());
-//    }
-
-//    private void deleteUser(User user) {
-//        try {
-//            User supervisor = getDefaultUserByRole(BackofficeUserRole.ADMIN);
-//            bookerControllerUsersApi.deleteUserById(supervisor, user.getId());
-//        } catch (UndeclaredThrowableException exception) {
-//            log.info("Connection refused: " + exception);
-//        }
-//    }
 
     //Pick and unpick functionality needed to leverage users during test execution in parallel mode to avoid data collision
     public synchronized List<User> getNotPickedUsers() {

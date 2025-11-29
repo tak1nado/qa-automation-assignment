@@ -19,6 +19,7 @@ import static java.util.Optional.ofNullable;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 @Log
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {"classpath:spring-application-context.xml"})
 public class APITestsRunner {
@@ -40,7 +41,7 @@ public class APITestsRunner {
 
     @AfterEach
     public void afterMethodCleanUp() {
-//        usersManager.unpickThreadUsers();
+//        usersManager.unpickThreadUsers(); this is needed if we want to create different users and use them in parallel test mode
     }
 
     @AfterEach
@@ -50,7 +51,7 @@ public class APITestsRunner {
 
     @AfterAll
     public void cleanUp() {
-//        usersManager.deleteAllCreatedUsers();
+//        usersManager.deleteAllCreatedUsers(); // we need to delete all new created users after the test
         tearDownClass();
     }
 

@@ -52,7 +52,7 @@ public class AllureStepAspect {
     )
     public void stepFailed(Throwable e) {
         getLifecycle().updateStep((s) ->
-            s.setStatus(ResultsUtils.getStatus(e).orElse(Status.BROKEN)).setStatusDetails(ResultsUtils.getStatusDetails(e).orElse(null))
+                s.setStatus(ResultsUtils.getStatus(e).orElse(Status.BROKEN)).setStatusDetails(ResultsUtils.getStatusDetails(e).orElse(null))
         );
         getLifecycle().stopStep();
     }
@@ -61,8 +61,8 @@ public class AllureStepAspect {
             pointcut = "anyMethod() && withStepAnnotation()"
     )
     public void stepStop() {
-            getLifecycle().updateStep((s) -> s.setStatus(Status.PASSED));
-            getLifecycle().stopStep();
+        getLifecycle().updateStep((s) -> s.setStatus(Status.PASSED));
+        getLifecycle().stopStep();
     }
 
     public static void setLifecycle(AllureLifecycle allure) {

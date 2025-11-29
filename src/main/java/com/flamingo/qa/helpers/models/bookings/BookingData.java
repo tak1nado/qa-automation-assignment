@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @Builder
@@ -16,4 +17,15 @@ public class BookingData {
     private LocalDate checkOut;
     private String additionalNeeds;
 
+    public String getCheckInDateString() {
+        return convertToZonedDateString(this.checkIn);
+    }
+
+    public String getCheckOutDateString() {
+        return convertToZonedDateString(this.checkOut);
+    }
+
+    private String convertToZonedDateString(LocalDate localDate) {
+        return localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
 }

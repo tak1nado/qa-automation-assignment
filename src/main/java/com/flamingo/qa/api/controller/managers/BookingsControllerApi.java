@@ -19,7 +19,6 @@ import java.util.Map;
 @Log
 @Component
 public class BookingsControllerApi {
-
     @Autowired private BookerApi bookerApi;
     @Autowired private UsersManager usersManager;
     private static final String AUTH_HEADER_NAME = "authorization";
@@ -31,8 +30,8 @@ public class BookingsControllerApi {
         log.info("Create new booking: " + newBookingData);
 
         ObjectNode bookingDatesNode = new ObjectMapper().createObjectNode();
-        bookingDatesNode.put("checkin", newBookingData.getCheckIn());
-        bookingDatesNode.put("checkout", newBookingData.getCheckOut());
+        bookingDatesNode.put("checkin", newBookingData.getCheckInDateString());
+        bookingDatesNode.put("checkout", newBookingData.getCheckOutDateString());
 
         ObjectNode jsonBody = new ObjectMapper().createObjectNode();
         jsonBody.put("firstname", newBookingData.getFirstname());
@@ -98,8 +97,8 @@ public class BookingsControllerApi {
         log.info(String.format("Full Update booking request by id: %s, by editor: %s, booking data: %s", id, userSession.getUser().getUsername(), bookingData));
 
         ObjectNode bookingDatesNode = new ObjectMapper().createObjectNode();
-        bookingDatesNode.put("checkin", bookingData.getCheckIn());
-        bookingDatesNode.put("checkout", bookingData.getCheckOut());
+        bookingDatesNode.put("checkin", bookingData.getCheckInDateString());
+        bookingDatesNode.put("checkout", bookingData.getCheckOutDateString());
 
         ObjectNode jsonBody = new ObjectMapper().createObjectNode();
         jsonBody.put("firstname", bookingData.getFirstname());
@@ -127,10 +126,10 @@ public class BookingsControllerApi {
 
         ObjectNode bookingDatesNode = new ObjectMapper().createObjectNode();
         if (bookingData.getCheckIn() != null) {
-            bookingDatesNode.put("checkin", bookingData.getCheckIn());
+            bookingDatesNode.put("checkin", bookingData.getCheckInDateString());
         }
         if (bookingData.getCheckOut() != null) {
-            bookingDatesNode.put("checkout", bookingData.getCheckOut());
+            bookingDatesNode.put("checkout", bookingData.getCheckOutDateString());
         }
 
         ObjectNode jsonBody = new ObjectMapper().createObjectNode();

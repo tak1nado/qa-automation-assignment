@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.openqa.selenium.WebDriver;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 public class WebDriverSession {
@@ -18,7 +19,7 @@ public class WebDriverSession {
     public WebDriverSession(WebDriver webDriver) {
         this.webDriver = webDriver;
         this.webDriver.manage().window().fullscreen();
-        this.webDriver.manage().timeouts().pageLoadTimeout(timeOut, this.timeUnit);
+        setPageLoadTimeout(timeOut, this.timeUnit);
         this.changeImplicitWait(timeOut, this.timeUnit);
     }
 
@@ -39,11 +40,16 @@ public class WebDriverSession {
     }
 
     public void changeImplicitWait(int value, TimeUnit timeUnit) {
-        webDriver.manage().timeouts().implicitlyWait(value, timeUnit);
+        setPageLoadTimeout(value, timeUnit);
     }
 
     //only for WebDriverSessions usage
     public void dismiss() {
         webDriver.quit();
+    }
+
+    private void setPageLoadTimeout(long timeOut, java.util.concurrent.TimeUnit timeUnit) {
+        Duration duration = Duration.of(timeOut, timeUnit.toChronoUnit());
+        this.webDriver.manage().timeouts().pageLoadTimeout(duration);
     }
 }

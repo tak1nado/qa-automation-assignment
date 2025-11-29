@@ -1,5 +1,6 @@
 package com.flamingo.qa.helpers.user.engine;
 
+import com.flamingo.qa.Cockpit;
 import com.flamingo.qa.helpers.managers.users.UsersManager;
 import com.flamingo.qa.helpers.models.users.User;
 import com.flamingo.qa.helpers.models.users.UserRole;
@@ -12,18 +13,17 @@ import java.util.ArrayList;
 public class UserSessions {
 
     @Autowired private UsersManager usersManager;
-    private ArrayList<Session> allSessionsList = new ArrayList<>();
-    private InheritableThreadLocal<ArrayList<Session>> tlSession = new InheritableThreadLocal<>();
+    private final ArrayList<Session> allSessionsList = new ArrayList<>();
+    private final InheritableThreadLocal<ArrayList<Session>> tlSession = new InheritableThreadLocal<>();
 
-    private UserSessionFactory userFactory = new UserSessionFactory();
+    private final UserSessionFactory userFactory = new UserSessionFactory();
 
     public boolean isSessionsListEmpty() {
         return allSessionsList.isEmpty();
     }
 
     public synchronized void setActiveUserSession(UserRole userRole) {
-        User user;
-        user = usersManager.getUsers().stream()
+        User user = usersManager.getUsers().stream()
                 .filter(user1 -> user1.getUserRole().equals(userRole))
                 .findAny()
                 .orElseThrow(() -> new NullPointerException("No such user role in properties: " + userRole.toString()));
