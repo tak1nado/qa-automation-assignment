@@ -1,5 +1,8 @@
 package com.flamingo.qa.steps;
 
 public enum TestKeyword {
-    BOOKING;
+    BOOKING_DATA,
+    BOOKING,
+    STUDENT_DATA,
+    STUDENT;
 }

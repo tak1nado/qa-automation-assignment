@@ -3,8 +3,7 @@ package com.flamingo.qa.runners;
 import com.flamingo.qa.api.controller.BookerController;
 import com.flamingo.qa.api.controller.actions.AuthActions;
 import com.flamingo.qa.backoffice.user.BackofficeUserRole;
-import com.flamingo.qa.helpers.managers.users.BookingsManager;
-import com.flamingo.qa.helpers.managers.users.UsersManager;
+import com.flamingo.qa.helpers.managers.bookings.BookingsManager;
 import com.flamingo.qa.helpers.user.engine.UserSession;
 import com.flamingo.qa.storefront.StorefrontCockpit;
 import io.qameta.allure.restassured.AllureRestAssured;
@@ -29,7 +28,6 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {"classpath:spring-application-context.xml"})
 public class APITestsRunner {
-    @Autowired private UsersManager usersManager;
     @Autowired private BookingsManager bookingsManager;
     @Autowired private AuthActions authActions;
     @Autowired private BookerController bookerController;

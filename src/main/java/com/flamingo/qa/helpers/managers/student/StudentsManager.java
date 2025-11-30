@@ -1,0 +1,102 @@
+package com.flamingo.qa.helpers.managers.student;
+
+import com.flamingo.qa.helpers.exceptions.InstanceAlreadyPickedException;
+import com.flamingo.qa.helpers.models.bookings.Booking;
+import com.flamingo.qa.helpers.models.bookings.BookingData;
+import com.flamingo.qa.helpers.models.student.Student;
+import com.flamingo.qa.helpers.user.engine.UserSession;
+import com.flamingo.qa.helpers.utils.RandomUtils;
+import lombok.extern.java.Log;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.lang.reflect.UndeclaredThrowableException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Log
+@Component
+public class StudentsManager {
+    @Autowired private RandomUtils randomUtils;
+    private final ArrayList<Student> students = new ArrayList<>();
+    private final InheritableThreadLocal<ArrayList<Student>> tlStudents = new InheritableThreadLocal<>();
+    private final ArrayList<Student> pickedStudents = new ArrayList<>();
+
+    public Student createInstance(Integer id, com.flamingo.qa.helpers.models.student.StudentData studentData) {
+        Student student = pick(new Student(id, studentData));
+        this.students.add(student);
+        return student;
+    }
+
+    public ArrayList<Student> getAllStudents() {
+        return students;
+    }
+
+    public BookingData generateRandomValidStudentData() {
+        //TODO create student data
+        return BookingData.builder()
+                .firstname(randomUtils.generateRandomString())
+                .lastname(randomUtils.generateRandomString())
+                .build();
+    }
+
+    public BookingData generateRandomValidStudentDataWithBookingData(Booking booking) {
+        //TODO create student data
+        return BookingData.builder()
+                .firstname(booking.getBookingData().getFirstname())
+                .lastname(booking.getBookingData().getLastname())
+                .build();
+    }
+
+    public void deleteAllCreatedStudents(UserSession adminSession) {
+        log.info("Students to delete: " + getAllStudents());
+//        getAllStudents().forEach(student -> deleteStudent(adminSession, student)); TODO create API
+        this.students.removeAll(getAllStudents());
+    }
+
+    private void deleteStudent(UserSession adminSession, Student student) {
+        try {
+//            studentsControllerApi.deleteBookingById(adminSession, student.getId()); TODO create API
+        } catch (UndeclaredThrowableException exception) {
+            log.info("Connection refused: " + exception);
+        }
+    }
+
+    public synchronized List<Student> getNotPickedStudents() {
+        return getAllStudents().stream()
+                .filter(student -> !pickedStudents.contains(student))
+                .collect(Collectors.toList());
+    }
+
+    public synchronized Student pick(Student student) throws InstanceAlreadyPickedException {
+        if (!isPicked(student)) {
+            this.pickedStudents.add(student);
+            if (this.tlStudents.get() == null) {
+                this.tlStudents.set(new ArrayList<>());
+                this.tlStudents.get().add(student);
+            } else if (!tlStudents.get().contains(student)) {
+                this.tlStudents.get().add(student);
+            }
+        }
+        return student;
+    }
+
+    public boolean isPicked(Student student) {
+        return this.pickedStudents.contains(student);
+    }
+
+    public synchronized void unpickThreadStudents(Student student) {
+        if (this.tlStudents.get() != null) {
+            this.pickedStudents.remove(student);
+            this.tlStudents.get().remove(student);
+        }
+    }
+
+    public synchronized void unpickThreadStudents() {
+        if (this.tlStudents.get() != null) {
+            this.pickedStudents.removeAll(this.tlStudents.get());
+            this.tlStudents.get().clear();
+        }
+    }
+}

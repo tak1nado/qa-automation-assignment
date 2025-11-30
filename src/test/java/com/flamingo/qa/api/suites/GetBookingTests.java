@@ -2,7 +2,7 @@ package com.flamingo.qa.api.suites;
 
 import com.flamingo.qa.api.controller.BookerApi;
 import com.flamingo.qa.api.controller.actions.BookingActions;
-import com.flamingo.qa.helpers.managers.users.BookingsManager;
+import com.flamingo.qa.helpers.managers.bookings.BookingsManager;
 import com.flamingo.qa.helpers.models.bookings.Booking;
 import com.flamingo.qa.runners.APITestsRunner;
 import io.qameta.allure.Description;

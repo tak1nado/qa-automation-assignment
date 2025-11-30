@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.flamingo.qa.api.controller.BookerApi;
-import com.flamingo.qa.helpers.managers.users.BookingsManager;
+import com.flamingo.qa.helpers.managers.bookings.BookingsManager;
 import com.flamingo.qa.helpers.models.bookings.BookingData;
 import com.flamingo.qa.helpers.models.bookings.BookingResponse;
 import com.flamingo.qa.runners.APITestsRunner;

@@ -1,4 +1,4 @@
-package com.flamingo.qa.helpers.managers.users;
+package com.flamingo.qa.helpers.managers.bookings;
 
 import com.flamingo.qa.api.controller.managers.BookingsControllerApi;
 import com.flamingo.qa.helpers.exceptions.InstanceAlreadyPickedException;

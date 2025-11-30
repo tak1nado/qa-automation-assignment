@@ -1,17 +1,14 @@
 package com.flamingo.qa.api.controller.actions;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.flamingo.qa.api.controller.managers.BookingsControllerApi;
 import com.flamingo.qa.helpers.exceptions.InstanceAlreadyPickedException;
-import com.flamingo.qa.helpers.managers.users.BookingsManager;
+import com.flamingo.qa.helpers.managers.bookings.BookingsManager;
 import com.flamingo.qa.helpers.models.bookings.Booking;
 import com.flamingo.qa.helpers.models.bookings.BookingData;
 import com.flamingo.qa.helpers.models.bookings.BookingResponse;
-import com.flamingo.qa.helpers.user.engine.UserSession;
 import com.flamingo.qa.helpers.user.engine.UserSessions;
-import com.google.gson.JsonParser;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import lombok.extern.java.Log;
