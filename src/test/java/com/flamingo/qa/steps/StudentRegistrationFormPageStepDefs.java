@@ -32,6 +32,7 @@ public class StudentRegistrationFormPageStepDefs extends AbstractStepDefs {
         studentRegistrationPage.fillInPhoneNumberField(studentData.getPhoneNumber());
         studentRegistrationPage.selectDateOfBirth(studentData.getBirthDay());
         studentRegistrationPage.selectSubjects(studentData.getSubjects());
+        studentRegistrationPage.selectHobbiesCheckbox(studentData.getHobbies());
         studentRegistrationPage.uploadPicture(studentData.getPicture());
         studentRegistrationPage.fillInAddress(studentData.getAddress());
         studentRegistrationPage.selectState(studentData.getState());
