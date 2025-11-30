@@ -172,7 +172,7 @@ public class BookingsControllerApi {
                 .contentType(ContentType.JSON)
                 .cookie(new Cookie.Builder(AUTH_COOKIE_TOKEN_NAME, userSession.getToken().getIdToken()).build())
                 .pathParam("id", id)
-                .get("/booking/{id}");
+                .delete("/booking/{id}");
 
         log.info("Delete booking response: " + response.asString());
 

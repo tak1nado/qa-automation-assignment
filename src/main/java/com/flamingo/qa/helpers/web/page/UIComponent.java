@@ -325,7 +325,7 @@ public abstract class UIComponent {
         try {
             getDriver().switchTo().frame(frameName);
         } catch (NoSuchFrameException ex) {
-            System.out.println(ex);
+            log.warning(ex.getMessage());
             return false;
         } finally {
             webDriverPool.getActiveDriverSession().restoreDefaultImplicitWait();

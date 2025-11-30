@@ -4,10 +4,12 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Component;
 
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -46,12 +48,8 @@ public class RandomUtils {
         return "login" + UUID.randomUUID();
     }
 
-    public String generateRandomScreenName() {
-        return "sn" + UUID.randomUUID();
-    }
-
     public String generateRandomPassword() {
-        return "pass" + RandomStringUtils.randomAlphanumeric(9);
+        return "pass" + RandomStringUtils.random(9, true, true);
     }
 
     public String generateRandomString() {
@@ -80,5 +78,36 @@ public class RandomUtils {
 
     public String generateRandomAlphanumericStringNumberOfSymbolsInRange(int min, int max) {
         return RandomStringUtils.randomAlphanumeric(getRandomNumberInRange(min, max));
+    }
+
+    public LocalDate generateRandomLocalDate(LocalDate minDate, LocalDate maxDate) {
+        long minDay = minDate.toEpochDay();
+        long maxDay = maxDate.toEpochDay();
+
+        long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay + 1);
+
+        return LocalDate.ofEpochDay(randomDay);
+    }
+
+    public LocalDate generateRandomPastDate() {
+        LocalDate today = LocalDate.now();
+        LocalDate tenYearsAgo = today.minusYears(1);
+        LocalDate yesterday = today.minusDays(1);
+
+        return generateRandomLocalDate(tenYearsAgo, yesterday);
+    }
+
+    public LocalDate generateRandomFutureDate() {
+        LocalDate tomorrow = LocalDate.now().plusDays(1);
+        LocalDate tenYearsLater = LocalDate.now().plusYears(1);
+
+        return generateRandomLocalDate(tomorrow, tenYearsLater);
+    }
+
+    public LocalDate generateRandomDateAfterDate(LocalDate date) {
+        LocalDate tomorrow = date.plusDays(1);
+        LocalDate tenYearsLater = date.plusYears(1);
+
+        return generateRandomLocalDate(tomorrow, tenYearsLater);
     }
 }

@@ -1,6 +1,12 @@
 package com.flamingo.qa.runners;
 
+import com.flamingo.qa.api.controller.BookerController;
+import com.flamingo.qa.api.controller.actions.AuthActions;
+import com.flamingo.qa.backoffice.user.BackofficeUserRole;
+import com.flamingo.qa.helpers.managers.users.BookingsManager;
 import com.flamingo.qa.helpers.managers.users.UsersManager;
+import com.flamingo.qa.helpers.user.engine.UserSession;
+import com.flamingo.qa.storefront.StorefrontCockpit;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import lombok.extern.java.Log;
@@ -24,10 +30,17 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
 @ContextConfiguration(locations = {"classpath:spring-application-context.xml"})
 public class APITestsRunner {
     @Autowired private UsersManager usersManager;
+    @Autowired private BookingsManager bookingsManager;
+    @Autowired private AuthActions authActions;
+    @Autowired private BookerController bookerController;
+    @Autowired private StorefrontCockpit storefrontCockpit;
+
+    protected UserSession adminUserSession;
 
     @BeforeAll
-    static void initSuite() {
+    public void initSuite() {
         RestAssured.replaceFiltersWith(new AllureRestAssured());
+        adminUserSession = authActions.loginAs(BackofficeUserRole.ADMIN);
     }
 
     @BeforeEach
@@ -41,7 +54,7 @@ public class APITestsRunner {
 
     @AfterEach
     public void afterMethodCleanUp() {
-//        usersManager.unpickThreadUsers(); this is needed if we want to create different users and use them in parallel test mode
+        bookingsManager.unpickThreadBookings();
     }
 
     @AfterEach
@@ -51,18 +64,15 @@ public class APITestsRunner {
 
     @AfterAll
     public void cleanUp() {
-//        usersManager.deleteAllCreatedUsers(); // we need to delete all new created users after the test
-        tearDownClass();
-    }
-
-    public void tearDownClass() {
+        bookingsManager.deleteAllCreatedBookings(adminUserSession);
         createAllureReportEnvironmentVariables();
     }
 
     private void createAllureReportEnvironmentVariables() {
         try (FileOutputStream fos = new FileOutputStream("target/allure-results/environment.properties")) {
             Properties properties = new Properties();
-//            properties.setProperty("Environment: ", ); //TODO add base url data
+            properties.setProperty("Environment: ", storefrontCockpit.getBaseUrl());
+            properties.setProperty("Restful endpoint: ", bookerController.getBaseUrl());
             ofNullable(System.getProperty("os.name")).ifPresent(p -> properties.setProperty("OS name: ", p));
             properties.store(fos, EMPTY);
         } catch (IOException e) {
