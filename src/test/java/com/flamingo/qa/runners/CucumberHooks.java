@@ -1,10 +1,7 @@
 package com.flamingo.qa.runners;
 
-import com.flamingo.qa.helpers.SeleniumGridSettings;
 import com.flamingo.qa.helpers.ThreadVarsHashMap;
-import com.flamingo.qa.helpers.user.engine.UserSessions;
 import com.flamingo.qa.helpers.web.engine.WebDriverSessions;
-import com.flamingo.qa.helpers.web.engine.WebDriverThreadTestSetups;
 import io.cucumber.java.After;
 import io.cucumber.java.Scenario;
 import io.qameta.allure.Allure;
@@ -28,14 +25,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Log
 @ContextConfiguration(locations = {"classpath:spring-application-context.xml"})
 public class CucumberHooks {
-
-    private static final String DEFAULT_BROWSER_NAME = "CHROME";
-    private static final String DEFAULT_HEADLESS = "false";
     @Autowired WebDriverSessions webDriverPool;
     @Autowired ThreadVarsHashMap threadVarsHashMap;
-    @Autowired private SeleniumGridSettings seleniumGridSettings;
-    @Autowired private WebDriverThreadTestSetups webDriverThreadTestSetups;
-    @Autowired private UserSessions userSessions;
 
     @Value("#{new Boolean('${console.errors:false}'.trim())}")
     boolean consoleErrors;

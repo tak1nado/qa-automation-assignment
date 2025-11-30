@@ -400,7 +400,7 @@ public abstract class UIComponent {
         confirmThatPageIsNotBlank();
     }
 
-    //workaround to refresh page is if it is blank from first try
+    //workaround to refresh page if it is blank from first try
     @Step("Confirm that page is not blank.")
     private void confirmThatPageIsNotBlank() {
         webDriverPool.getActiveDriverSession().setMediumImplicitWait();
@@ -621,6 +621,7 @@ public abstract class UIComponent {
         }
     }
 
+    //workaround for projects with spinner load on the page
     @Step("Wait until Load spinner is loaded.")
     public void waitElementLoadSpinnerIsNotDisplayed() {
         WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofMillis(webDriverPool.getActiveDriverSession().getTimeOut()));

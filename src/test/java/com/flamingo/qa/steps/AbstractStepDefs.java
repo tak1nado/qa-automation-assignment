@@ -9,7 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 @CucumberContextConfiguration
 @ContextConfiguration(locations = {"classpath:spring-application-context.xml"})
 public abstract class AbstractStepDefs {
-    @Autowired protected ThreadVarsHashMap threadVarsHashMap;
+    @Autowired protected ThreadVarsHashMap<TestKeyword> threadVarsHashMap;
     @Autowired protected UserSessions userSessions;
 
 }

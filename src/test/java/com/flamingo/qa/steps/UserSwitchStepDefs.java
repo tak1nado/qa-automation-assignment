@@ -5,12 +5,8 @@ import com.flamingo.qa.helpers.managers.users.UsersManager;
 import com.flamingo.qa.helpers.web.engine.WebDriverSessions;
 import com.flamingo.qa.storefront.user.StorefrontUserRole;
 import io.cucumber.java.en.Given;
-import io.cucumber.spring.CucumberContextConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 
-//@CucumberContextConfiguration
-//@ContextConfiguration(locations = {"classpath:spring-application-context.xml"})
 public class UserSwitchStepDefs extends AbstractStepDefs {
 
     @Autowired private WebDriverSessions webDriverPool;

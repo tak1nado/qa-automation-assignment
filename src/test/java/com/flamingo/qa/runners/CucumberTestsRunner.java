@@ -11,7 +11,6 @@ import io.github.bonigarcia.wdm.config.DriverManagerType;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import lombok.extern.java.Log;
-import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import java.io.FileOutputStream;
@@ -23,7 +22,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 @Log
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @CucumberContextConfiguration
 @ContextConfiguration(locations = {"classpath:spring-application-context.xml"})
 public class CucumberTestsRunner {

@@ -1,9 +1,8 @@
 package com.flamingo.qa;
 
-import lombok.Getter;
+import lombok.Data;
 
+@Data
 public abstract class Cockpit {
-    @Getter protected String baseUrl;
-
-//    public abstract String getLoginUrl();
+    protected String baseUrl;
 }
