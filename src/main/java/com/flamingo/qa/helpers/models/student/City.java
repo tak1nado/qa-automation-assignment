@@ -8,10 +8,10 @@ public enum City {
 
 
     public final State state;
-    public final String genderText;
+    public final String cityText;
 
-    City(State state, String genderText) {
+    City(State state, String cityText) {
         this.state = state;
-        this.genderText = genderText;
+        this.cityText = cityText;
     }
 }

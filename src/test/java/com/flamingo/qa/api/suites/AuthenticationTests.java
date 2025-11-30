@@ -44,8 +44,7 @@ public class AuthenticationTests extends APITestsRunner {
                 .body(jsonBody)
                 .post("/auth");
 
-        log.info("User is logged in: " + response);
-        log.info("Set token to user session.");
+        log.info("User is logged in response: " + response);
 
         response.then()
                 .assertThat()
@@ -68,8 +67,7 @@ public class AuthenticationTests extends APITestsRunner {
                 .body(jsonBody)
                 .post("/auth");
 
-        log.info("User is logged in: " + response);
-        log.info("Set token to user session.");
+        log.info("User is logged in response: " + response);
 
         response.then()
                 .assertThat()

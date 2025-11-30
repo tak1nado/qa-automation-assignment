@@ -24,6 +24,10 @@ public class StudentData {
     private City city;
     private State state;
 
+    public String getBirthDayString() {
+        return convertToZonedDateString(this.birthDay);
+    }
+
     private String convertToZonedDateString(LocalDate localDate) {
         return localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
