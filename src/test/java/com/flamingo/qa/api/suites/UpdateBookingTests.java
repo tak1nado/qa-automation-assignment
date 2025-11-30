@@ -20,12 +20,14 @@ import io.restassured.response.Response;
 import lombok.extern.java.Log;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.hamcrest.Matchers.equalTo;
 
 @Log
+@Tag("API")
 @Epic("Bookings")
 @Feature("Update booking API feature")
 public class UpdateBookingTests extends APITestsRunner {

@@ -12,12 +12,14 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import lombok.extern.java.Log;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.hamcrest.Matchers.equalTo;
 
 @Log
+@Tag("API")
 @Epic("Bookings")
 @Feature("Search for booking API feature")
 public class GetBookingTests extends APITestsRunner {

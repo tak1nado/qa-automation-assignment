@@ -28,9 +28,9 @@ public class WebDriverSessions {
     @Autowired WebDriverThreadTestSetups webDriverThreadTestSetups;
     @Autowired UsersManager usersManager;
 
-    private InheritableThreadLocal<HashMap<UserRole, WebDriverSession>> tlDriversMap = new InheritableThreadLocal<>();
+    private final InheritableThreadLocal<HashMap<UserRole, WebDriverSession>> tlDriversMap = new InheritableThreadLocal<>();
 
-    private InheritableThreadLocal<WebDriverPool> tlWebDriverPool = new InheritableThreadLocal<>();
+    private final InheritableThreadLocal<WebDriverPool> tlWebDriverPool = new InheritableThreadLocal<>();
 
     public synchronized void setDriver(URL hubUrl, String browserName, boolean headless, UserRole userRole) {
         Capabilities capabilities;
@@ -46,7 +46,6 @@ public class WebDriverSessions {
             logPrefs.enable(LogType.DRIVER, Level.SEVERE);
             logPrefs.enable(LogType.PERFORMANCE, Level.SEVERE);
 
-//            ((ChromeOptions) capabilities).setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
             ((ChromeOptions) capabilities).setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
             ((ChromeOptions) capabilities).addArguments("--remote-allow-origins=*");
 
@@ -117,24 +116,4 @@ public class WebDriverSessions {
         var driver = (RemoteWebDriver) getActiveDriver();
         return new DriverInfo(driver.getCapabilities().getBrowserName(), driver.getCapabilities().getBrowserVersion());
     }
-
-    //TODO remove if not needed
-//    public String getAppVersion() {
-//        Optional<LogEntry> logEntry = getActiveDriver()
-//                .manage()
-//                .logs()
-//                .get("browser")
-//                .getAll()
-//                .stream()
-//                .filter(f -> f.getLevel().getName().equalsIgnoreCase("info"))
-//                .filter(f -> f.getMessage().contains("App v."))
-//                .findFirst();
-//        String result = null;
-//        if (logEntry.isPresent()) {
-//            String message = logEntry.get().getMessage();
-//            result = message.substring(message.indexOf("v."));
-//            result = result.substring(0, result.indexOf("-"));
-//        }
-//        return result;
-//    }
 }

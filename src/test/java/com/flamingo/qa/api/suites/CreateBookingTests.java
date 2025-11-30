@@ -16,6 +16,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import lombok.extern.java.Log;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,6 +24,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.*;
 
 @Log
+@Tag("API")
 @Epic("Bookings")
 @Feature("Create booking API feature")
 public class CreateBookingTests extends APITestsRunner {

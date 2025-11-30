@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -9,13 +10,12 @@
     <name>Flamingo Test Task</name>
 
     <properties>
-        <!--        <thread.count>1</thread.count>-->
         <default.active.environment.profile>dev</default.active.environment.profile>
         <tags.skip>--tags ~@Skip</tags.skip>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <junit.version>5.10.2</junit.version>
-        <cucumber.version>7.32.0</cucumber.version>
+        <cucumber.version>7.14.0</cucumber.version>
         <spring.version>5.3.31</spring.version>
         <logback.version>1.2.11</logback.version>
         <slf4j.version>1.7.36</slf4j.version>
@@ -24,6 +24,10 @@
         <allure.version>2.31.0</allure.version>
         <selenium.version>4.38.0</selenium.version>
         <jackson.version>2.16.1</jackson.version>
+        <webdrivermanager.version>6.3.3</webdrivermanager.version>
+        <awaitility.version>4.1.1</awaitility.version>
+        <lombok.version>1.18.22</lombok.version>
+        <assertj.version>3.26.0</assertj.version>
     </properties>
 
     <dependencyManagement>
@@ -84,7 +88,7 @@
             <artifactId>junit-platform-suite-api</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--Cucumber for more structural tests.-->
+        <!--Cucumber for structural tests.-->
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
@@ -104,13 +108,14 @@
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit5</artifactId>
-            <version>2.31.0</version>
+            <version>${allure.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.relevantcodes</groupId>
-            <artifactId>extentreports</artifactId>
-            <version>2.41.2</version>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-cucumber7-jvm</artifactId>
+            <version>${allure.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
@@ -142,6 +147,7 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
+            <scope>test</scope>
         </dependency>
         <!--Selenium lib-->
         <dependency>
@@ -149,11 +155,7 @@
             <artifactId>selenium-java</artifactId>
             <version>${selenium.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-api</artifactId>
-            <version>${selenium.version}</version>
-        </dependency>
+        <!-- УДАЛЕНА: selenium-api - обычно не нужен, т.к. включен в selenium-java -->
         <dependency>
             <groupId>ru.stqa.selenium</groupId>
             <artifactId>webdriver-factory</artifactId>
@@ -164,7 +166,6 @@
             <artifactId>selenium-chrome-driver</artifactId>
             <version>${selenium.version}</version>
         </dependency>
-        <!-- TODO check if jupiter extension is needed -->
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>selenium-jupiter</artifactId>
@@ -174,9 +175,9 @@
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>6.3.3</version>
+            <version>${webdrivermanager.version}</version>
         </dependency>
-        <!-- JAXB Dependencies (for Java 9+) -->
+        <!-- JAXB Dependencies -->
         <dependency>
             <groupId>jakarta.xml.bind</groupId>
             <artifactId>jakarta.xml.bind-api</artifactId>
@@ -191,6 +192,11 @@
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
             <version>3.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <version>1.3.2</version>
         </dependency>
         <!-- logback dependencies -->
         <dependency>
@@ -274,19 +280,19 @@
         <dependency>
             <groupId>org.awaitility</groupId>
             <artifactId>awaitility</artifactId>
-            <version>4.1.1</version>
+            <version>${awaitility.version}</version>
         </dependency>
         <!--Lombok for clear code-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.22</version>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.26.0</version>
+            <version>${assertj.version}</version>
         </dependency>
     </dependencies>
 
@@ -333,7 +339,6 @@
                     </dependency>
                 </dependencies>
                 <configuration>
-                    <excludeJUnit5Engines>cucumber</excludeJUnit5Engines>
                     <systemPropertyVariables>
                         <allure.results.directory>${project.basedir}/target/allure-results</allure.results.directory>
                     </systemPropertyVariables>
@@ -341,6 +346,7 @@
                     <trimStackTrace>false</trimStackTrace>
                     <argLine>
                         -Dspring.profiles.active=${default.active.environment.profile}
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
                 </configuration>
             </plugin>
@@ -351,7 +357,6 @@
                 <configuration>
                     <reportVersion>2.35.1</reportVersion>
                     <allureDownloadUrl>
-<!--                        https://github.com/allure-framework/allure2/releases/download/2.7.0/allure-2.7.0.zip-->
                         https://github.com/allure-framework/allure2/releases/download/2.35.1/allure-2.35.1.zip
                     </allureDownloadUrl>
                     <reportDirectory>${project.basedir}/target/allure-report</reportDirectory>
@@ -360,4 +365,43 @@
             </plugin>
         </plugins>
     </build>
+    <profiles>
+        <!-- ==================================================== -->
+        <!-- Profile 1: Only API tests                            -->
+        <!-- ==================================================== -->
+        <profile>
+            <id>api-only</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <groups>API</groups>
+                            <excludedGroups>CUCUMBER</excludedGroups>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- ==================================================== -->
+        <!-- Profile 2: Only Cucumber tests                       -->
+        <!-- ==================================================== -->
+        <profile>
+            <id>cucumber-only</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <groups>UI</groups>
+                            <excludedGroups>API</excludedGroups>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

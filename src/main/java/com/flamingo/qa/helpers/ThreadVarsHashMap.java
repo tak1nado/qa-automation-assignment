@@ -7,7 +7,7 @@ import java.util.HashMap;
 @Component
 public class ThreadVarsHashMap {
 
-    private InheritableThreadLocal<HashMap<Enum, Object>> tlHashMapList = new InheritableThreadLocal<>();
+    private final InheritableThreadLocal<HashMap<Enum, Object>> tlHashMapList = new InheritableThreadLocal<>();
 
     public void put(Enum key, Object value) {
         if (tlHashMapList.get() == null) tlHashMapList.set(new HashMap<>());
