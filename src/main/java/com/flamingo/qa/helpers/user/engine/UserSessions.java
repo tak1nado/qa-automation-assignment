@@ -1,6 +1,5 @@
 package com.flamingo.qa.helpers.user.engine;
 
-import com.flamingo.qa.Cockpit;
 import com.flamingo.qa.helpers.managers.users.UsersManager;
 import com.flamingo.qa.helpers.models.users.User;
 import com.flamingo.qa.helpers.models.users.UserRole;
@@ -31,7 +30,7 @@ public class UserSessions {
         if (tlSession.get() == null) {
             tlSession.set(new ArrayList<>());
             createUserSession(user).setActive(true);
-        } else if (!getActiveUserSession().getUserRole().equals(userRole)) {
+        } else if (getActiveUserSession() == null || !getActiveUserSession().getUserRole().equals(userRole)) {
             tlSession.get().forEach(user1 -> user1.setActive(false));
             tlSession.get().stream()
                     .filter(user1 -> user1.getUserRole().equals(userRole))

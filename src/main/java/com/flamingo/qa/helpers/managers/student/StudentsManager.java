@@ -34,10 +34,20 @@ public class StudentsManager {
     }
 
     public StudentData generateRandomValidStudentData() {
-        //TODO create student data
+        City randomCity = City.getRandom();
         return StudentData.builder()
                 .firstname(randomUtils.generateRandomString())
                 .lastname(randomUtils.generateRandomString())
+                .email(randomUtils.generateRandomEmail())
+                .gender(Gender.getRandom())
+                .phoneNumber(randomUtils.generateRandomNumeric(10))
+                .birthDay(randomUtils.generateRandomBirthDay())
+                .subjects(Subject.getRandomUnique(2))
+                .hobbies(Hobby.getRandomUnique(2))
+                .picture(randomUtils.getDefaultFile())
+                .address(randomUtils.generateRandomAlphanumeric(10))
+                .city(randomCity)
+                .state(randomCity.state)
                 .build();
     }
 

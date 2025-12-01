@@ -1,13 +1,9 @@
 package com.flamingo.qa.ui.suites;
 
-import com.flamingo.qa.runners.CucumberTestsRunner;
-import org.junit.jupiter.api.Tag;
 import org.junit.platform.suite.api.*;
 
 @Suite
 @IncludeEngines("cucumber")
-@Tag("UI")
-@SelectClasses(CucumberTestsRunner.class)
 @ConfigurationParameters({
         @ConfigurationParameter(key = "cucumber.features", value = "classpath:features/student"),
         @ConfigurationParameter(

@@ -344,6 +344,11 @@
                     </systemPropertyVariables>
                     <testFailureIgnore>true</testFailureIgnore>
                     <trimStackTrace>false</trimStackTrace>
+                    <includes>
+                        <include>**/*Suite.java</include>
+                        <include>**/*Tests.java</include>
+                        <include>**/*Test.java</include>
+                    </includes>
                     <argLine>
                         -Dspring.profiles.active=${default.active.environment.profile}
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
@@ -378,7 +383,10 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <groups>API</groups>
-                            <excludedGroups>CUCUMBER</excludedGroups>
+                            <excludes>
+                                <exclude>**/ui/**</exclude>
+                                <exclude>**/CucumberTestsRunner.java</exclude>
+                            </excludes>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -396,8 +404,16 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
-                            <groups>UI</groups>
-                            <excludedGroups>API</excludedGroups>
+                            <includes>
+                                <include>**/*Suite.java</include>
+                            </includes>
+                            <excludes>
+                                <exclude>**/api/**</exclude>
+                                <exclude>**/*APITestsRunner*.java</exclude>
+                            </excludes>
+                            <systemPropertyVariables>
+                                <cucumber.filter.tags>@UI</cucumber.filter.tags>
+                            </systemPropertyVariables>
                         </configuration>
                     </plugin>
                 </plugins>

@@ -14,14 +14,9 @@ import static com.flamingo.qa.storefront.page_block_elements.StudentRegistration
 @Component
 public class StudentRegistrationFormModal extends UIComponent {
 
-    @Step("Get firstname")
-    public String getFirstName() {
-        return getText(NAME_FIELD_XPATH).split(" ")[0];
-    }
-
-    @Step("Get lastname")
-    public String getLastName() {
-        return getText(NAME_FIELD_XPATH).split(" ")[1];
+    @Step("Get full name")
+    public String getFullName() {
+        return getText(NAME_FIELD_XPATH);
     }
 
     @Step("Get email")
@@ -68,14 +63,9 @@ public class StudentRegistrationFormModal extends UIComponent {
         return getText(ADDRESS_FIELD_XPATH);
     }
 
-    @Step("Get city")
-    public String getCity() {
-        return getText(STATE_AND_CITY_FIELD_XPATH).split(" ")[1];
-    }
-
-    @Step("Get state")
-    public String getState() {
-        return getText(STATE_AND_CITY_FIELD_XPATH).split(" ")[0];
+    @Step("Get state and city")
+    public String getStateCity() {
+        return getText(STATE_AND_CITY_FIELD_XPATH);
     }
 
     @Step("Close Student submission pop-up")

@@ -414,7 +414,7 @@ public abstract class UIComponent {
     @Step("Wait until page is fully loaded.")
     protected void waitUntilPageIsFullyLoaded() {
         waitHTMLTemplateLoad();
-        waitElementLoadSpinnerIsNotDisplayed();
+//        waitElementLoadSpinnerIsNotDisplayed();
         confirmThatPageIsNotBlank();
     }
 

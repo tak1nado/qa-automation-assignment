@@ -63,12 +63,9 @@ public class StudentRegistrationFormPageStepDefs extends AbstractStepDefs {
         StudentData studentData = threadVarsHashMap.get(TestKeyword.STUDENT_DATA);
 
         SoftAssertions softly = new SoftAssertions();
-        softly.assertThat(studentRegistrationFormModal.getFirstName())
-                .as("Firstname data should be equal.")
-                .isEqualTo(studentData.getFirstname());
-        softly.assertThat(studentRegistrationFormModal.getLastName())
-                .as("Lastname data should be equal.")
-                .isEqualTo(studentData.getLastname());
+        softly.assertThat(studentRegistrationFormModal.getFullName())
+                .as("Firstname and lastname data should be equal.")
+                .isEqualTo(String.format("%s %s", studentData.getFirstname(), studentData.getLastname()));
         softly.assertThat(studentRegistrationFormModal.getEmailField())
                 .as("Email data should be equal.")
                 .isEqualTo(studentData.getEmail());
@@ -93,12 +90,9 @@ public class StudentRegistrationFormPageStepDefs extends AbstractStepDefs {
         softly.assertThat(studentRegistrationFormModal.getAddress())
                 .as("Address data should be equal.")
                 .isEqualTo(studentData.getAddress());
-        softly.assertThat(studentRegistrationFormModal.getCity())
-                .as("City data should be equal.")
-                .isEqualTo(studentData.getCity().cityText);
-        softly.assertThat(studentRegistrationFormModal.getState())
-                .as("State data should be equal.")
-                .isEqualTo(studentData.getState().stateText);
+        softly.assertThat(studentRegistrationFormModal.getStateCity())
+                .as("State and City data should be equal.")
+                .isEqualTo(String.format("%s %s", studentData.getState().stateText, studentData.getCity().cityText));
         softly.assertAll();
     }
 
