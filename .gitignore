@@ -1,6 +1,0 @@
-#.gitignore
-#src/test/resources/META-INF
-.DS_Store
-.idea/
-target
-.allure
