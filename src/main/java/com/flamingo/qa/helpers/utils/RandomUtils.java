@@ -3,6 +3,7 @@ package com.flamingo.qa.helpers.utils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -68,6 +69,10 @@ public class RandomUtils {
         return RandomStringUtils.randomAlphanumeric(length);
     }
 
+    public String generateRandomNumeric(int length) {
+        return RandomStringUtils.randomNumeric(length);
+    }
+
     public String generateRandomAlphabeticNumberOfSymbolsInRange(int min, int max) {
         return RandomStringUtils.randomAlphabetic(getRandomNumberInRange(min, max));
     }
@@ -87,6 +92,14 @@ public class RandomUtils {
         long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay + 1);
 
         return LocalDate.ofEpochDay(randomDay);
+    }
+
+    public LocalDate generateRandomBirthDay() {
+        LocalDate today = LocalDate.now();
+        LocalDate tenYearsAgo = today.minusYears(20);
+        LocalDate yesterday = today.minusDays(1);
+
+        return generateRandomLocalDate(tenYearsAgo, yesterday);
     }
 
     public LocalDate generateRandomPastDate() {
@@ -109,5 +122,15 @@ public class RandomUtils {
         LocalDate tenYearsLater = date.plusYears(1);
 
         return generateRandomLocalDate(tomorrow, tenYearsLater);
+    }
+
+    public String generateRandomEmail() {
+        return "email" + UUID.randomUUID() + "@test.test";
+    }
+
+    public File getDefaultFile() {
+        String relativeResourcePath = "src/test/resources/";
+        String fullRelativePath = relativeResourcePath + "TestPicture001.png";
+        return new File(fullRelativePath);
     }
 }

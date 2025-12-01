@@ -4,6 +4,7 @@ import com.flamingo.qa.helpers.models.student.*;
 import com.flamingo.qa.storefront.StorefrontBasePage;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.Select;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -14,7 +15,7 @@ import static com.flamingo.qa.storefront.page_elements.StudentRegistrationFormPa
 
 @Component
 public class StudentRegistrationPage extends StorefrontBasePage {
-    private final String PAGE_URL = "order-management/";
+    private final String PAGE_URL = "automation-practice-form";
 
     @Step("Fill in firstname field with: {0}")
     public void fillInFirstNameField(String firstName) {
@@ -43,8 +44,22 @@ public class StudentRegistrationPage extends StorefrontBasePage {
 
     @Step("Select date of birth: {0}")
     public void selectDateOfBirth(LocalDate dateOfBirth) {
-        click(DATE_OF_BIRTH_FIELD_ID);
-        // TODO add select birthday logic
+        click(By.id(DATE_OF_BIRTH_FIELD_ID));
+        selectDate(dateOfBirth);
+    }
+
+    private void selectDate(LocalDate targetDate) {
+        int targetYear = targetDate.getYear();
+        String targetMonthIndex = String.valueOf(targetDate.getMonthValue() - 1);
+        int targetDay = targetDate.getDayOfMonth();
+        //Select year
+        Select yearSelect = new Select($(By.cssSelector(DATE_OF_BIRTH_FORM_YEAR_CSS)));
+        yearSelect.selectByValue(String.valueOf(targetYear));
+        //Select month
+        Select monthSelect = new Select($(By.cssSelector(DATE_OF_BIRTH_FORM_MONTH_CSS)));
+        monthSelect.selectByValue(targetMonthIndex);
+        //Select day
+        click(DATE_OF_BIRTH_FORM_DAY_XPATH, String.valueOf(targetDay));
     }
 
     @Step("Select subjects: {0}")
@@ -54,8 +69,8 @@ public class StudentRegistrationPage extends StorefrontBasePage {
 
     @Step("Select subject: {0}")
     public void selectSubject(Subject subject) {
-        enterText(subject.subjectText, By.id(SUBJECTS_FIELD_ID));
-        //TODO add logic to select subject from suggestions
+        sendKeys(subject.subjectText, By.id(SUBJECTS_FIELD_ID));
+        click(SUBJECT_VALUE_SUGGESTIONS_DOWN_BY_NAME_XPATH, subject.subjectText);
     }
 
     @Step("Select hobbies: {0}")
@@ -81,13 +96,13 @@ public class StudentRegistrationPage extends StorefrontBasePage {
     @Step("Select city: {0}")
     public void selectCity(City city) {
         click(By.id(CITY_DROP_DOWN_ID));
-        //TODO add logic to select city from drop-down by name
+        click(CITY_VALUE_SUGGESTIONS_DOWN_BY_NAME_XPATH, city.cityText);
     }
 
     @Step("Select state: {0}")
     public void selectState(State state) {
         click(By.id(STATE_DROP_DOWN_ID));
-        //TODO add logic to select city from drop-down by name
+        click(STATE_VALUE_SUGGESTIONS_DOWN_BY_NAME_XPATH, state.stateText);
     }
 
     @Step("Click on Submit button")

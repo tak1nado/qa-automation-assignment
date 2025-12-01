@@ -1,5 +1,7 @@
 package com.flamingo.qa.helpers.models.student;
 
+import java.util.Random;
+
 public enum City {
     DELHI(State.NCR, "Delhi"),
     AGRA(State.UTTAR_PRADESH, "Agra"),
@@ -14,4 +16,10 @@ public enum City {
         this.state = state;
         this.cityText = cityText;
     }
+
+    public static City getRandom() {
+        int rnd = new Random().nextInt(values().length);
+        return values()[rnd];
+    }
+
 }

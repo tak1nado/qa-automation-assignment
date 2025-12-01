@@ -6,7 +6,7 @@ import lombok.Data;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -17,8 +17,8 @@ public class StudentData {
     private Gender gender;
     private String phoneNumber;
     private LocalDate birthDay;
-    private ArrayList<Subject> subjects;
-    private ArrayList<Hobby> hobbies;
+    private List<Subject> subjects;
+    private List<Hobby> hobbies;
     private File picture;
     private String address;
     private City city;

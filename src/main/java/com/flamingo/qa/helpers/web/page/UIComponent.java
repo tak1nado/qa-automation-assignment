@@ -103,6 +103,7 @@ public abstract class UIComponent {
     }
 
     protected void click(String xpath, String... args) {
+        waitUntilElementIsVisible(xpath, args);
         WebElement webElement = $(xpath, args);
         webDriverPool.getActiveDriverSession().setShortImplicitWait();
         try {
@@ -122,6 +123,7 @@ public abstract class UIComponent {
     }
 
     protected void click(By by) {
+        waitUntilElementIsVisible(by);
         WebElement webElement = $(by);
         webDriverPool.getActiveDriverSession().setShortImplicitWait();
         try {
@@ -198,11 +200,27 @@ public abstract class UIComponent {
         $(by).sendKeys(text);
     }
 
+    //Without clearing before entering the text
+    protected void sendKeys(String text, By by) {
+        if (text == null)
+            text = StringUtils.EMPTY;
+        waitUntilElementIsVisible(by);
+        $(by).sendKeys(text);
+    }
+
     protected void enterText(String text, String xpath, String... args) {
         if (text == null)
             text = StringUtils.EMPTY;
         waitUntilElementIsVisible(xpath, args);
         $(xpath, args).clear();
+        $(xpath, args).sendKeys(text);
+    }
+
+    //Without clearing before entering the text
+    protected void sendKeys(String text, String xpath, String... args) {
+        if (text == null)
+            text = StringUtils.EMPTY;
+        waitUntilElementIsVisible(xpath, args);
         $(xpath, args).sendKeys(text);
     }
 

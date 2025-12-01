@@ -3,7 +3,7 @@ package com.flamingo.qa.helpers.managers.student;
 import com.flamingo.qa.helpers.exceptions.InstanceAlreadyPickedException;
 import com.flamingo.qa.helpers.models.bookings.Booking;
 import com.flamingo.qa.helpers.models.bookings.BookingData;
-import com.flamingo.qa.helpers.models.student.Student;
+import com.flamingo.qa.helpers.models.student.*;
 import com.flamingo.qa.helpers.user.engine.UserSession;
 import com.flamingo.qa.helpers.utils.RandomUtils;
 import lombok.extern.java.Log;
@@ -33,19 +33,29 @@ public class StudentsManager {
         return students;
     }
 
-    public BookingData generateRandomValidStudentData() {
+    public StudentData generateRandomValidStudentData() {
         //TODO create student data
-        return BookingData.builder()
+        return StudentData.builder()
                 .firstname(randomUtils.generateRandomString())
                 .lastname(randomUtils.generateRandomString())
                 .build();
     }
 
-    public BookingData generateRandomValidStudentDataWithBookingData(Booking booking) {
-        //TODO create student data
-        return BookingData.builder()
+    public StudentData generateRandomValidStudentDataWithBookingData(Booking booking) {
+        City randomCity = City.getRandom();
+        return StudentData.builder()
                 .firstname(booking.getBookingData().getFirstname())
                 .lastname(booking.getBookingData().getLastname())
+                .email(randomUtils.generateRandomEmail())
+                .gender(Gender.getRandom())
+                .phoneNumber(randomUtils.generateRandomNumeric(10))
+                .birthDay(randomUtils.generateRandomBirthDay())
+                .subjects(Subject.getRandomUnique(2))
+                .hobbies(Hobby.getRandomUnique(2))
+                .picture(randomUtils.getDefaultFile())
+                .address(randomUtils.generateRandomAlphanumeric(10))
+                .city(randomCity)
+                .state(randomCity.state)
                 .build();
     }
 

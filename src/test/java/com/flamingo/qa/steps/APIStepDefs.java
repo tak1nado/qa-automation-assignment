@@ -9,7 +9,7 @@ public class APIStepDefs extends AbstractStepDefs {
     @Autowired private BookingActions bookingActions;
 
     @And("^Booking is created\\.$")
-    public void checkThatCreatedBookingDataIsCorrectInTheTable() {
+    public void createBookingIfNotCreated() {
         Booking booking = bookingActions.getCreatedBooking();
         threadVarsHashMap.put(TestKeyword.BOOKING, booking);
     }

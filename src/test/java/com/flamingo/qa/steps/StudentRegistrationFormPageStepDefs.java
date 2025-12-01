@@ -11,6 +11,11 @@ import io.cucumber.java.en.When;
 import org.assertj.core.api.SoftAssertions;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import java.util.stream.Collectors;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class StudentRegistrationFormPageStepDefs extends AbstractStepDefs {
@@ -28,6 +33,7 @@ public class StudentRegistrationFormPageStepDefs extends AbstractStepDefs {
         StudentData studentData = threadVarsHashMap.get(TestKeyword.STUDENT_DATA);
         studentRegistrationPage.fillInFirstNameField(studentData.getFirstname());
         studentRegistrationPage.fillInLastNameField(studentData.getLastname());
+        studentRegistrationPage.fillInEmailField(studentData.getEmail());
         studentRegistrationPage.selectGenderRadiobutton(studentData.getGender());
         studentRegistrationPage.fillInPhoneNumberField(studentData.getPhoneNumber());
         studentRegistrationPage.selectDateOfBirth(studentData.getBirthDay());
@@ -72,15 +78,18 @@ public class StudentRegistrationFormPageStepDefs extends AbstractStepDefs {
         softly.assertThat(studentRegistrationFormModal.getPhoneNumber())
                 .as("Phone number data should be equal.")
                 .isEqualTo(studentData.getPhoneNumber());
-        softly.assertThat(studentRegistrationFormModal.getDateOfBirth())
+        softly.assertThat(reformatDate(studentRegistrationFormModal.getDateOfBirth()))
                 .as("Date od birth data should be equal.")
                 .isEqualTo(studentData.getBirthDayString());
         softly.assertThat(studentRegistrationFormModal.getSubjects())
                 .as("Subjects data should be equal.")
-                .isEqualTo(studentData.getSubjects());
+                .isEqualTo(studentData.getSubjects().stream().map(s -> s.subjectText).collect(Collectors.toList()));
         softly.assertThat(studentRegistrationFormModal.getHobbies())
                 .as("Hobbies data should be equal.")
-                .isEqualTo(studentData.getHobbies());
+                .isEqualTo(studentData.getHobbies().stream().map(hobby -> hobby.hobbyText).collect(Collectors.toList()));
+        softly.assertThat(studentRegistrationFormModal.getPictureName())
+                .as("Picture name should be equal.")
+                .isEqualTo(studentData.getPicture().getName());
         softly.assertThat(studentRegistrationFormModal.getAddress())
                 .as("Address data should be equal.")
                 .isEqualTo(studentData.getAddress());
@@ -91,6 +100,13 @@ public class StudentRegistrationFormPageStepDefs extends AbstractStepDefs {
                 .as("State data should be equal.")
                 .isEqualTo(studentData.getState().stateText);
         softly.assertAll();
+    }
 
+    //TODO move to StringUtils
+    public static String reformatDate(String actualDateString) {
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd MMMM,yyyy", Locale.ENGLISH);
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(actualDateString, inputFormatter);
+        return date.format(outputFormatter);
     }
 }

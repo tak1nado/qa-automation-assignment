@@ -10,12 +10,6 @@ public class DataGeneratorStepDefs extends AbstractStepDefs {
     @Autowired private BookingActions bookingActions;
     @Autowired private StudentsManager studentsManager;
 
-    @And("^Booking is created\\.$")
-    public void checkThatCreatedBookingDataIsCorrectInTheTable() {
-        Booking booking = bookingActions.getCreatedBooking();
-        threadVarsHashMap.put(TestKeyword.BOOKING, booking);
-    }
-
     @And("Generate Student data based on created booking.")
     public void generateStudentDataBasedOnCreatedBooking() {
         Booking booking = threadVarsHashMap.get(TestKeyword.BOOKING);

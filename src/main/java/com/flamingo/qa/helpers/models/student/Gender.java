@@ -1,6 +1,6 @@
 package com.flamingo.qa.helpers.models.student;
 
-import lombok.Data;
+import java.util.Random;
 
 public enum Gender {
     MALE("Male"),
@@ -11,5 +11,10 @@ public enum Gender {
 
     Gender(String genderText) {
         this.genderText = genderText;
+    }
+
+    public static Gender getRandom() {
+        int rnd = new Random().nextInt(values().length);
+        return values()[rnd];
     }
 }
