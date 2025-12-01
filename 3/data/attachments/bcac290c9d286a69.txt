@@ -1,0 +1,3 @@
+[2025-12-01T21:19:49.002Z] [SEVERE] https://cdn-ima.33across.com/ob.js 0:18353 "33Across Lexicon ID Mappings Provider: PID not found"
+--------------
+[2025-12-01T21:19:52.365Z] [SEVERE] https://cdn.ad.plus/player/adplus.js 435:46 Uncaught TypeError: c(...).setup is not a function
