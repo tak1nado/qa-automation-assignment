@@ -109,7 +109,7 @@ public abstract class UIComponent {
         try {
             WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofMillis(webDriverPool.getActiveDriverSession().getShortTimeOut()));
             wait.until(driver -> isElementClickable(webElement));
-                webElement.click();
+            webElement.click();
         } catch (StaleElementReferenceException exception) {
             log.warning("ERROR: Page stale element exception. Retry. " + exception);
             click(xpath, args);
@@ -144,7 +144,7 @@ public abstract class UIComponent {
 
     protected void clickEvery(String xpath, String... args) {
         List<WebElement> elements = $$(xpath, args);
-        for(WebElement element : elements) {
+        for (WebElement element : elements) {
             element.click();
             sleep(300);
         }
@@ -248,13 +248,13 @@ public abstract class UIComponent {
     }
 
     protected void fillInTextCharByChar(String text, By by) {
-        for(int i = 0; i < text.length(); i++){
+        for (int i = 0; i < text.length(); i++) {
             $(by).sendKeys(String.valueOf(text.charAt(i)));
         }
     }
 
     protected void fillInTextCharByChar(String text, String xpath, String... args) {
-        for(int i = 0; i < text.length(); i++){
+        for (int i = 0; i < text.length(); i++) {
             $(xpath, args).sendKeys(String.valueOf(text.charAt(i)));
             sleep(50);
         }
@@ -277,14 +277,14 @@ public abstract class UIComponent {
     }
 
     protected void fillInTextCharByCharAndBlur(String text, By by) {
-        for(int i = 0; i < text.length(); i++){
+        for (int i = 0; i < text.length(); i++) {
             $(by).sendKeys(String.valueOf(text.charAt(i)));
         }
         blurElement($(by));
     }
 
     protected void fillInTextCharByCharAndBlur(String text, String xpath, String... args) {
-        for(int i = 0; i < text.length(); i++){
+        for (int i = 0; i < text.length(); i++) {
             $(xpath, args).sendKeys(String.valueOf(text.charAt(i)));
             sleep(50);
         }
@@ -318,6 +318,7 @@ public abstract class UIComponent {
         $(by).clear();
         blurElement($(by));
     }
+
     protected void clearAllText(String xpath) {
         new Actions(getDriver()).sendKeys($(xpath), Keys.CONTROL, Keys.BACK_SPACE).perform();
     }
@@ -392,7 +393,7 @@ public abstract class UIComponent {
     }
 
     protected Wait<WebDriver> fluentWait() {
-       return setFluentWait(webDriverPool.getActiveDriverSession().getMediumTimeOut());
+        return setFluentWait(webDriverPool.getActiveDriverSession().getMediumTimeOut());
     }
 
     protected boolean isPresent(By by) {
@@ -664,6 +665,14 @@ public abstract class UIComponent {
     }
 
     protected String getText(String xpath, String... args) {
+        try {
+            setFluentWait(webDriverPool.getActiveDriverSession().getShortTimeOut())
+                    .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(String.format(xpath, args))));
+        } catch (TimeoutException exception) {
+            log.warning("ELEMENT IS NOT VISIBLE OR HIDE: " + xpath + args);
+            return (String) ((JavascriptExecutor) getDriver())
+                    .executeScript("return arguments[0].textContent;", $(xpath, args));
+        }
         setFluentWait(webDriverPool.getActiveDriverSession().getShortTimeOut())
                 .until(ExpectedConditions.presenceOfElementLocated(By.xpath(String.format(xpath, args))));
         WebElement element = $(xpath, args);
@@ -733,11 +742,15 @@ public abstract class UIComponent {
 
     public void deselectCheckbox(WebElement element) {
         WebElement checkbox = element.findElement(By.xpath("//input[@class='x-checkbox__input']"));
-        if(checkbox.isSelected()) { element.click(); }
+        if (checkbox.isSelected()) {
+            element.click();
+        }
     }
 
     public void selectCheckbox(WebElement element) {
         WebElement checkbox = element.findElement(By.xpath("//input[@class='x-checkbox__input']"));
-        if(!checkbox.isSelected()) { element.click(); }
+        if (!checkbox.isSelected()) {
+            element.click();
+        }
     }
 }

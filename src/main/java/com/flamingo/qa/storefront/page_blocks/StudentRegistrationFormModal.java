@@ -74,6 +74,6 @@ public class StudentRegistrationFormModal extends UIComponent {
     }
 
     public boolean isOpened() {
-        return isDisplayed(FORM_POP_UP_BLOCK_XPATH);
+        return isPresent(FORM_POP_UP_BLOCK_XPATH);
     }
 }

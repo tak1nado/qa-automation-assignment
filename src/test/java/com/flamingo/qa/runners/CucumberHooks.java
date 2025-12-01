@@ -5,7 +5,6 @@ import com.flamingo.qa.helpers.web.engine.WebDriverSessions;
 import com.flamingo.qa.steps.TestKeyword;
 import io.cucumber.java.After;
 import io.cucumber.java.Scenario;
-import io.cucumber.spring.CucumberContextConfiguration;
 import io.qameta.allure.Allure;
 import lombok.extern.java.Log;
 import org.junit.platform.suite.api.SelectClasses;
@@ -18,7 +17,6 @@ import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.test.context.ContextConfiguration;
 
 import java.io.ByteArrayInputStream;
 import java.util.stream.Collectors;
@@ -27,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Log
 @SelectClasses(CucumberTestsRunner.class)
-@ContextConfiguration(locations = {"classpath:spring-application-context.xml"})
 public class CucumberHooks {
     @Autowired private WebDriverSessions webDriverPool;
     @Autowired private ThreadVarsHashMap<TestKeyword> threadVarsHashMap;

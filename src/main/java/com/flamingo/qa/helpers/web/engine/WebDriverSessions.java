@@ -3,6 +3,7 @@ package com.flamingo.qa.helpers.web.engine;
 import com.flamingo.qa.helpers.managers.users.UsersManager;
 import com.flamingo.qa.helpers.models.users.UserRole;
 import com.flamingo.qa.helpers.user.engine.UserSessions;
+import lombok.extern.java.Log;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@Log
 @Component
 public class WebDriverSessions {
     @Autowired UserSessions userSessions;
@@ -54,9 +56,9 @@ public class WebDriverSessions {
             ((ChromeOptions) capabilities).setExperimentalOption("prefs", chromePrefs);
 
             if (headless) {
-                ((ChromeOptions) capabilities).addArguments("--headless");
-                ((ChromeOptions) capabilities).addArguments("window-size=1920x1080");
+                ((ChromeOptions) capabilities).addArguments("--headless=new");
             }
+            ((ChromeOptions) capabilities).addArguments("--window-size=1920,1080");
         } else {
             capabilities = new DesiredCapabilities();
             ((DesiredCapabilities) capabilities).setBrowserName(browserName);
@@ -98,10 +100,18 @@ public class WebDriverSessions {
     }
 
     public synchronized WebDriver getActiveDriver() {
+        if (tlDriversMap.get() == null) {
+            log.info("Current test Thread doesn't have any drivers");
+            return null;
+        }
         return tlDriversMap.get().values().stream().filter(WebDriverSession::isActive).map(WebDriverSession::getWebDriver).findAny().orElse(null);
     }
 
     public synchronized WebDriverSession getActiveDriverSession() {
+        if (tlDriversMap.get() == null) {
+            log.info("Current test Thread doesn't have any drivers");
+            return null;
+        }
         return tlDriversMap.get().values().stream().filter(WebDriverSession::isActive).findAny().orElse(null);
     }
 

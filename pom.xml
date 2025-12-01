@@ -10,6 +10,7 @@
     <name>Flamingo Test Task</name>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <default.active.environment.profile>dev</default.active.environment.profile>
         <tags.skip>--tags ~@Skip</tags.skip>
         <maven.compiler.source>17</maven.compiler.source>
