@@ -5,6 +5,7 @@ import org.junit.platform.suite.api.*;
 @Suite
 @IncludeEngines("cucumber")
 @ConfigurationParameters({
+        @ConfigurationParameter(key = "allure.junit5.enabled", value = "false"),
         @ConfigurationParameter(key = "cucumber.features", value = "classpath:features/student"),
         @ConfigurationParameter(
                 key = "cucumber.glue",
