@@ -4,18 +4,18 @@
 
 Project consists of two parts: UI and API tests that can be run together or separately.
 
-API tests are build based on JUnit5 framework and Rest-Assured library. 
+API tests are build based on TestNG framework and Rest-Assured library. 
 
-UI tests are based on Cucumber but can be moved to JUnit easily. 
+UI tests are based on Cucumber but can be moved to TestNG easily. 
 Cucumber needed for tests to be more structured, easy maintained and fast extended/implemented.
 For better architecture tests should be separated in two different modules and separate module for tests java/main.
 
 Spring introduced for data storing and dependency injection functionality. 
 It needed to easily manage beans and build thread-safe framework.
 
-Allure report implemented both for Cucumber and JUnit tests. These reports should be separated by modules in future and joined after all modules are executed.
+Allure report implemented both for Cucumber and TestNG tests. These reports should be separated by modules in future and joined after all modules are executed.
 
-Framework is based on its own web/user engine core instead of Selenide. This core helps to easily switch between different browsers/user during the test and store/cleanup test data during and after the test.
+Framework is based on its own web/user engine core together with Playwright logic inside. This core helps to easily switch between different browsers/user during the test and store/cleanup test data during and after the test.
 
 ## Project legend
 
@@ -60,11 +60,11 @@ Framework is built to be extended in the future for:
            browser.name=chrome
            browser.headless.mode=true
            ```
-    5) create `META-INF/selenium_grid.properties`
-        - to run tests in GRID or any remote environment.:
+    5) create `META-INF/playwrightRemoteHub.properties`
+        - to run tests in remote environment.:
 
             ```properties
-            #selenim grid hub url. Selenium GRID needed if we want to run test in different browsers or in different environments
+            #remote hub url needed if we want to run test in different browsers or in different environments in remote VM
             #hub.url=http://localhost:4444/wd/hub
             hub.url=
             ```

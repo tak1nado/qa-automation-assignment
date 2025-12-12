@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.flamingo.qa</groupId>
-    <artifactId>qa-automation-assignment</artifactId>
+    <groupId>com.project.qa</groupId>
+    <artifactId>qa-automation-playwright-testng</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>Flamingo Test Task</name>
+    <name>Playwright Test Template</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -16,7 +16,7 @@
         <tags.skip>--tags ~@Skip</tags.skip>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <junit.version>5.10.2</junit.version>
+        <testng.version>7.11.0</testng.version>
         <cucumber.version>7.14.0</cucumber.version>
         <spring.version>5.3.31</spring.version>
         <logback.version>1.2.11</logback.version>
@@ -24,9 +24,7 @@
         <aspectj.version>1.9.7</aspectj.version>
         <rest.assured.version>4.4.0</rest.assured.version>
         <allure.version>2.31.0</allure.version>
-        <selenium.version>4.38.0</selenium.version>
         <jackson.version>2.16.1</jackson.version>
-        <webdrivermanager.version>6.3.3</webdrivermanager.version>
         <awaitility.version>4.1.1</awaitility.version>
         <lombok.version>1.18.22</lombok.version>
         <assertj.version>3.26.0</assertj.version>
@@ -34,14 +32,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- JUnit BOM -->
-            <dependency>
-                <groupId>org.junit</groupId>
-                <artifactId>junit-bom</artifactId>
-                <version>${junit.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
             <!-- Cucumber BOM -->
             <dependency>
                 <groupId>io.cucumber</groupId>
@@ -54,52 +44,46 @@
     </dependencyManagement>
 
     <dependencies>
-        <!--JUnit framework-->
+        <!--TestNG framework-->
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-launcher</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-engine</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-suite-engine</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-suite-api</artifactId>
-            <scope>test</scope>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
         </dependency>
         <!--Cucumber for structural tests.-->
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.platform</groupId>
+                    <artifactId>junit-platform-engine</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.junit.jupiter</groupId>
+                    <artifactId>junit-jupiter</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-junit-platform-engine</artifactId>
+            <artifactId>cucumber-testng</artifactId>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.junit.platform</groupId>
+                    <artifactId>junit-platform-engine</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.junit.jupiter</groupId>
+                    <artifactId>junit-jupiter</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
@@ -109,7 +93,7 @@
         <!--Allure report-->
         <dependency>
             <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-junit5</artifactId>
+            <artifactId>allure-testng</artifactId>
             <version>${allure.version}</version>
             <scope>test</scope>
         </dependency>
@@ -151,33 +135,11 @@
             <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
-        <!--Selenium lib-->
+        <!--Playwright lib-->
         <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>${selenium.version}</version>
-        </dependency>
-        <!-- УДАЛЕНА: selenium-api - обычно не нужен, т.к. включен в selenium-java -->
-        <dependency>
-            <groupId>ru.stqa.selenium</groupId>
-            <artifactId>webdriver-factory</artifactId>
-            <version>4.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-chrome-driver</artifactId>
-            <version>${selenium.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.bonigarcia</groupId>
-            <artifactId>selenium-jupiter</artifactId>
-            <version>6.3.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.github.bonigarcia</groupId>
-            <artifactId>webdrivermanager</artifactId>
-            <version>${webdrivermanager.version}</version>
+            <groupId>com.microsoft.playwright</groupId>
+            <artifactId>playwright</artifactId>
+            <version>1.57.0</version>
         </dependency>
         <!-- JAXB Dependencies -->
         <dependency>
@@ -253,11 +215,6 @@
             <artifactId>xml-path</artifactId>
             <version>${rest.assured.version}</version>
         </dependency>
-        <dependency>
-            <groupId>uk.co.mwtestconsultancy</groupId>
-            <artifactId>selenium-to-restassured</artifactId>
-            <version>0.3</version>
-        </dependency>
         <!--___________________-->
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -330,30 +287,21 @@
                 <version>3.2.5</version>
                 <dependencies>
                     <dependency>
-                        <groupId>org.junit.jupiter</groupId>
-                        <artifactId>junit-jupiter-engine</artifactId>
-                        <version>${junit.version}</version>
-                    </dependency>
-                    <dependency>
                         <groupId>org.aspectj</groupId>
                         <artifactId>aspectjweaver</artifactId>
                         <version>${aspectj.version}</version>
                     </dependency>
                 </dependencies>
                 <configuration>
-<!--                    Parallel execution setups-->
-                    <forkCount>${thread.count}</forkCount>
-                    <parallel>none</parallel>
+                    <testNGArtifactName>org.testng:testng</testNGArtifactName>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>${project.basedir}/src/test/resources/testngXmls/tests.xml</suiteXmlFile>
+                    </suiteXmlFiles>
                     <systemPropertyVariables>
                         <allure.results.directory>${project.basedir}/target/allure-results</allure.results.directory>
                     </systemPropertyVariables>
                     <testFailureIgnore>true</testFailureIgnore>
                     <trimStackTrace>false</trimStackTrace>
-                    <includes>
-                        <include>**/*Suite.java</include>
-                        <include>**/*Tests.java</include>
-                        <include>**/*Test.java</include>
-                    </includes>
                     <argLine>
                         -Dspring.profiles.active=${default.active.environment.profile}
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
@@ -363,66 +311,12 @@
             <plugin>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
-                <version>2.16.1</version>
+                <version>2.12.0</version>
                 <configuration>
-                    <reportVersion>2.35.1</reportVersion>
-                    <allureDownloadUrl>
-                        https://github.com/allure-framework/allure2/releases/download/2.35.1/allure-2.35.1.zip
-                    </allureDownloadUrl>
                     <reportDirectory>${project.basedir}/target/allure-report</reportDirectory>
                     <resultsDirectory>${project.basedir}/target/allure-results</resultsDirectory>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-    <profiles>
-        <!-- ==================================================== -->
-        <!-- Profile 1: Only API tests                            -->
-        <!-- ==================================================== -->
-        <profile>
-            <id>api-only</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <groups>API</groups>
-                            <excludes>
-                                <exclude>**/ui/**</exclude>
-                                <exclude>**/CucumberTestsRunner.java</exclude>
-                            </excludes>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <!-- ==================================================== -->
-        <!-- Profile 2: Only Cucumber tests                       -->
-        <!-- ==================================================== -->
-        <profile>
-            <id>cucumber-only</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <includes>
-                                <include>**/*Suite.java</include>
-                            </includes>
-                            <excludes>
-                                <exclude>**/api/**</exclude>
-                                <exclude>**/*APITestsRunner*.java</exclude>
-                            </excludes>
-                            <systemPropertyVariables>
-                                <cucumber.filter.tags>@UI</cucumber.filter.tags>
-                            </systemPropertyVariables>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>

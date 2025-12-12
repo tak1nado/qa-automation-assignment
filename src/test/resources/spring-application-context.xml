@@ -14,13 +14,13 @@
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <!-- Aspect -->
-    <bean id="logAspect" class="com.flamingo.qa.helpers.aspects.StepLoggerAspect"/>
-    <bean id="allureStepAspect" class="com.flamingo.qa.helpers.aspects.AllureStepAspect"/>
+    <bean id="logAspect" class="com.project.qa.helpers.aspects.StepLoggerAspect"/>
+    <bean id="allureStepAspect" class="com.project.qa.helpers.aspects.AllureStepAspect"/>
 
-    <context:component-scan base-package="com.flamingo.qa.storefront"/>
-    <context:component-scan base-package="com.flamingo.qa.backoffice"/>
-    <context:component-scan base-package="com.flamingo.qa.api.controller"/>
-    <context:component-scan base-package="com.flamingo.qa.helpers"/>
+    <context:component-scan base-package="com.project.qa.storefront"/>
+    <context:component-scan base-package="com.project.qa.backoffice"/>
+    <context:component-scan base-package="com.project.qa.api.controller"/>
+    <context:component-scan base-package="com.project.qa.helpers"/>
 
     <import resource="classpath:spring-credentials-config-context.xml"/>
 

@@ -1,4 +1,3 @@
-@UI
 Feature: Validate created Student data
 
 Background: Create booking and open Web form
