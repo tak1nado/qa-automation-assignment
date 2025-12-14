@@ -96,10 +96,10 @@ jobs:
           scope_arg=""
           case "${{ inputs.scope }}" in
             "UI")
-              scope_arg="-P cucumber-only"
+              scope_arg="-Dgroups=ui"
               ;;
             "API")
-              scope_arg="-P api-only"
+              scope_arg="-Dgroups=api"
               ;;
             "all")
               scope_arg=""
