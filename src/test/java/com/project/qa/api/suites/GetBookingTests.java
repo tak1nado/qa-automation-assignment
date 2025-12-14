@@ -18,6 +18,7 @@ import org.testng.annotations.Test;
 import static org.hamcrest.Matchers.equalTo;
 
 @Log
+@Test(groups = "api")
 @Epic("Bookings")
 @Feature("Search for booking API feature")
 public class GetBookingTests extends APITestsRunner {

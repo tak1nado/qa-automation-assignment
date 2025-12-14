@@ -97,9 +97,9 @@ Framework is built to be extended in the future for:
   ```
 - by default Maven runs all the tests UI + API. You can specify what type of tests you want to launch :
   ```bash
-  mvn clean test -P cucumber-only allure:report
+  mvn clean test -Dgroups=api allure:report
   or 
-  mvn clean test -P api-only allure:report
+  mvn clean test -Dgroups=ui allure:report
   ```
 - logging Allure Steps into console:
       `-Dlogging.steps=true`
@@ -145,5 +145,4 @@ Behaviors page contains all test suites with test cases inside. Each test-case h
 - Git repository `https://github.com/tak1nado/qa-automation-assignment`
 - Git actions `https://github.com/tak1nado/qa-automation-assignment/actions`
 - Git Allure reports `https://tak1nado.github.io/qa-automation-assignment/`
-- Test task description `https://docs.google.com/document/d/1eLhyWK22cbZ6PB-NjLSxAhfEJd5Lp0Uj_sQAozQ40YU/edit?tab=t.0` 
 

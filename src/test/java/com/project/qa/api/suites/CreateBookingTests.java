@@ -23,6 +23,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.*;
 
 @Log
+@Test(groups = "api")
 @Epic("Bookings")
 @Feature("Create booking API feature")
 public class CreateBookingTests extends APITestsRunner {

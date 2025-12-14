@@ -297,6 +297,7 @@
                     <suiteXmlFiles>
                         <suiteXmlFile>${project.basedir}/src/test/resources/testngXmls/tests.xml</suiteXmlFile>
                     </suiteXmlFiles>
+                    <threadCount>${thread.count}</threadCount>
                     <systemPropertyVariables>
                         <allure.results.directory>${project.basedir}/target/allure-results</allure.results.directory>
                     </systemPropertyVariables>

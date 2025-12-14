@@ -1,5 +1,6 @@
 package com.project.qa.helpers.user.engine;
 
+import com.project.qa.api.controller.actions.AuthActions;
 import com.project.qa.helpers.managers.users.UsersManager;
 import com.project.qa.helpers.models.users.User;
 import com.project.qa.helpers.models.users.UserRole;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 public class UserSessions {
 
     @Autowired private UsersManager usersManager;
+    @Autowired private AuthActions authActions;
     private final ArrayList<Session> allSessionsList = new ArrayList<>();
     private final InheritableThreadLocal<ArrayList<Session>> tlSession = new InheritableThreadLocal<>();
 

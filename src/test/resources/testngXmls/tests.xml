@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="Wabash Smoke suite" parallel="tests" thread-count="1" preserve-order="false">
-    <test name="API tests suit">
+<suite name="Test Smoke suites" parallel="tests" preserve-order="false">
+    <test name="API tests suit" parallel="methods">
         <classes>
             <class name="com.project.qa.api.suites.AuthenticationTests"/>
             <class name="com.project.qa.api.suites.CreateBookingTests"/>
@@ -10,7 +10,7 @@
             <class name="com.project.qa.api.suites.UpdateBookingTests"/>
         </classes>
     </test>
-    <test name="Students suit">
+    <test name="Students suit" parallel="methods">
         <classes>
             <class name="com.project.qa.ui.suites.CreateStudentSuite"/>
         </classes>

@@ -11,16 +11,12 @@ import io.qameta.allure.Allure;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.test.context.ContextConfiguration;
 
 import java.io.ByteArrayInputStream;
 
 import static org.testng.Assert.assertTrue;
 
-
 @Log
-@CucumberContextConfiguration
-@ContextConfiguration(locations = {"classpath:spring-application-context.xml"})
 public class CucumberHooks {
     @Autowired private BrowserSessions browserSessions;
     @Autowired private ThreadVarsHashMap<TestKeyword> threadVarsHashMap;

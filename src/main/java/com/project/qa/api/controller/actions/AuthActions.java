@@ -39,6 +39,6 @@ public class AuthActions {
         if (!userSession.getToken().isValid()) {
             authenticationControllerApi.loginRequestForUserSession(userSession);
         }
-        return userSession.getToken().getAccessToken();
+        return userSession.getToken().getIdToken();
     }
 }

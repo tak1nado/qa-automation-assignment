@@ -7,6 +7,7 @@ import com.project.qa.helpers.managers.bookings.BookingsManager;
 import com.project.qa.helpers.user.engine.UserSession;
 import com.project.qa.helpers.web.engine.BrowserSessions;
 import com.project.qa.storefront.StorefrontCockpit;
+import io.cucumber.spring.CucumberContextConfiguration;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import lombok.extern.java.Log;
@@ -23,13 +24,14 @@ import static java.util.Optional.ofNullable;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 @Log
+@CucumberContextConfiguration
 @ContextConfiguration(locations = {"classpath:spring-application-context.xml"})
 public class TestsRunner extends AbstractTestNGSpringContextTests {
-    @Autowired protected BookingsManager bookingsManager;
-    @Autowired private AuthActions authActions;
+    @Autowired private BookingsManager bookingsManager;
     @Autowired private BrowserSessions browserSessions;
     @Autowired private StorefrontCockpit storefrontCockpit;
     @Autowired private BookerController bookerController;
+    @Autowired protected AuthActions authActions;
     protected UserSession adminUserSession;
 
     @BeforeSuite(alwaysRun = true)
@@ -39,7 +41,10 @@ public class TestsRunner extends AbstractTestNGSpringContextTests {
 
         RestAssured.replaceFiltersWith(new AllureRestAssured());
         log.info("🌱 Initializing global Spring context");
+    }
 
+    @BeforeClass(alwaysRun = true)
+    public void prepareData() {
         adminUserSession = authActions.loginAs(BackofficeUserRole.ADMIN);
     }
 

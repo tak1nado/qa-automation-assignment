@@ -21,6 +21,7 @@ import static org.hamcrest.Matchers.*;
 
 
 @Log
+@Test(groups = "api")
 @Epic("Authentication")
 @Feature("Restful authentication feature")
 public class AuthenticationTests extends APITestsRunner {

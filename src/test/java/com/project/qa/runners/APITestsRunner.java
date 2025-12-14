@@ -1,6 +1,8 @@
 package com.project.qa.runners;
 
+import com.project.qa.helpers.managers.bookings.BookingsManager;
 import lombok.extern.java.Log;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
@@ -8,6 +10,7 @@ import java.lang.reflect.Method;
 
 @Log
 public class APITestsRunner extends TestsRunner {
+    @Autowired protected BookingsManager bookingsManager;
 
     @BeforeMethod(alwaysRun = true)
     public void beforeMethodLog(Method method) {

@@ -10,6 +10,7 @@ import com.project.qa.helpers.managers.bookings.BookingsManager;
 import com.project.qa.helpers.models.bookings.Booking;
 import com.project.qa.helpers.models.bookings.BookingData;
 import com.project.qa.helpers.models.bookings.BookingResponse;
+import com.project.qa.helpers.user.engine.UserSessions;
 import com.project.qa.runners.APITestsRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -26,6 +27,7 @@ import org.testng.annotations.Test;
 import static org.hamcrest.Matchers.equalTo;
 
 @Log
+@Test(groups = "api")
 @Epic("Bookings")
 @Feature("Update booking API feature")
 public class UpdateBookingTests extends APITestsRunner {
@@ -56,7 +58,7 @@ public class UpdateBookingTests extends APITestsRunner {
 
         Response response = bookerApi.bookerControllerRequest()
                 .contentType(ContentType.JSON)
-                .cookie(new Cookie.Builder(AUTH_COOKIE_TOKEN_NAME, adminUserSession.getToken().getIdToken()).build())
+                .cookie(new Cookie.Builder(AUTH_COOKIE_TOKEN_NAME, authActions.getAccessToken(adminUserSession)).build())
                 .body(jsonBody)
                 .pathParam("id", booking.getId())
                 .put("/booking/{id}");
@@ -101,7 +103,7 @@ public class UpdateBookingTests extends APITestsRunner {
 
         Response response = bookerApi.bookerControllerRequest()
                 .contentType(ContentType.JSON)
-                .cookie(new Cookie.Builder(AUTH_COOKIE_TOKEN_NAME, adminUserSession.getToken().getIdToken()).build())
+                .cookie(new Cookie.Builder(AUTH_COOKIE_TOKEN_NAME, authActions.getAccessToken(adminUserSession)).build())
                 .body(jsonBody)
                 .pathParam("id", booking.getId())
                 .patch("/booking/{id}");
