@@ -1,6 +1,6 @@
 # QA AUTOMATION TEST PROJECT
 
-## Test framework description
+## Test framework description (You can switch to testNGPlaywright branch to see other project configuration)
 
 Project consists of two parts: UI and API tests that can be run together or separately.
 
@@ -145,5 +145,4 @@ Behaviors page contains all test suites with test cases inside. Each test-case h
 - Git repository `https://github.com/tak1nado/qa-automation-assignment`
 - Git actions `https://github.com/tak1nado/qa-automation-assignment/actions`
 - Git Allure reports `https://tak1nado.github.io/qa-automation-assignment/`
-- Test task description `https://docs.google.com/document/d/1eLhyWK22cbZ6PB-NjLSxAhfEJd5Lp0Uj_sQAozQ40YU/edit?tab=t.0` 
 
